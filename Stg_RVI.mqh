@@ -16,7 +16,7 @@ INPUT int RVI_PriceStopMethod = 0;                              // Price stop me
 INPUT float RVI_PriceStopLevel = 0;                             // Price stop level
 INPUT int RVI_TickFilterMethod = 1;                             // Tick filter method
 INPUT float RVI_MaxSpread = 4.0;                                // Max spread to trade (pips)
-INPUT int RVI_Shift = 2;                                        // Shift
+INPUT short RVI_Shift = 2;                                      // Shift
 INPUT int RVI_OrderCloseTime = -20;                             // Order close time in mins (>0) or bars (<0)
 INPUT string __RVI_Indi_RVI_Parameters__ =
     "-- RVI strategy: RVI indicator params --";  // >>> RVI strategy: RVI indicator <<<
