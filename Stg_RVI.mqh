@@ -45,7 +45,7 @@ struct Stg_RVI_Params : StgParams {
 
   // Struct constructors.
   Stg_RVI_Params(RVIParams &_iparams, StgParams &_sparams)
-      : iparams(indi_rvi_defaults, _iparams.tf), sparams(stg_rvi_defaults) {
+      : iparams(indi_rvi_defaults, _iparams.tf.GetTf()), sparams(stg_rvi_defaults) {
     iparams = _iparams;
     sparams = _sparams;
   }
