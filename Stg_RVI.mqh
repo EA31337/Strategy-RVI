@@ -4,24 +4,23 @@
  */
 
 // User input params.
-INPUT string __RVI_Parameters__ = "-- RVI strategy params --";  // >>> RVI <<<
-INPUT float RVI_LotSize = 0;                                    // Lot size
-INPUT int RVI_SignalOpenMethod = 2;                             // Signal open method (-127-127)
-INPUT float RVI_SignalOpenLevel = 0.0f;                         // Signal open level
-INPUT int RVI_SignalOpenFilterMethod = 32;                      // Signal open filter method
-INPUT int RVI_SignalOpenBoostMethod = 0;                        // Signal open boost method
-INPUT int RVI_SignalCloseMethod = 2;                            // Signal close method (-127-127)
-INPUT float RVI_SignalCloseLevel = 0.0f;                        // Signal close level
-INPUT int RVI_PriceStopMethod = 1;                              // Price stop method
-INPUT float RVI_PriceStopLevel = 0;                             // Price stop level
-INPUT int RVI_TickFilterMethod = 1;                             // Tick filter method
-INPUT float RVI_MaxSpread = 4.0;                                // Max spread to trade (pips)
-INPUT short RVI_Shift = 2;                                      // Shift
-INPUT int RVI_OrderCloseTime = -20;                             // Order close time in mins (>0) or bars (<0)
-INPUT string __RVI_Indi_RVI_Parameters__ =
-    "-- RVI strategy: RVI indicator params --";  // >>> RVI strategy: RVI indicator <<<
-INPUT unsigned int RVI_Indi_RVI_Period = 10;     // Averaging period
-INPUT int RVI_Indi_RVI_Shift = 0;                // Shift
+INPUT_GROUP("RVI strategy: strategy params");
+INPUT float RVI_LotSize = 0;                // Lot size
+INPUT int RVI_SignalOpenMethod = 2;         // Signal open method (-127-127)
+INPUT float RVI_SignalOpenLevel = 0.0f;     // Signal open level
+INPUT int RVI_SignalOpenFilterMethod = 32;  // Signal open filter method
+INPUT int RVI_SignalOpenBoostMethod = 0;    // Signal open boost method
+INPUT int RVI_SignalCloseMethod = 2;        // Signal close method (-127-127)
+INPUT float RVI_SignalCloseLevel = 0.0f;    // Signal close level
+INPUT int RVI_PriceStopMethod = 1;          // Price stop method
+INPUT float RVI_PriceStopLevel = 0;         // Price stop level
+INPUT int RVI_TickFilterMethod = 1;         // Tick filter method
+INPUT float RVI_MaxSpread = 4.0;            // Max spread to trade (pips)
+INPUT short RVI_Shift = 2;                  // Shift
+INPUT int RVI_OrderCloseTime = -20;         // Order close time in mins (>0) or bars (<0)
+INPUT_GROUP("RVI strategy: RVI indicator params");
+INPUT unsigned int RVI_Indi_RVI_Period = 10;  // Averaging period
+INPUT int RVI_Indi_RVI_Shift = 0;             // Shift
 
 // Structs.
 
