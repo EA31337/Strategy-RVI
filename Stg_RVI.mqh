@@ -18,6 +18,8 @@ INPUT float RVI_PriceStopLevel = 0;         // Price stop level
 INPUT int RVI_TickFilterMethod = 1;         // Tick filter method
 INPUT float RVI_MaxSpread = 4.0;            // Max spread to trade (pips)
 INPUT short RVI_Shift = 2;                  // Shift
+INPUT float RVI_OrderCloseLoss = 0;         // Order close loss
+INPUT float RVI_OrderCloseProfit = 0;       // Order close profit
 INPUT int RVI_OrderCloseTime = -20;         // Order close time in mins (>0) or bars (<0)
 INPUT_GROUP("RVI strategy: RVI indicator params");
 INPUT unsigned int RVI_Indi_RVI_Period = 10;  // Averaging period
@@ -35,8 +37,11 @@ struct Stg_RVI_Params_Defaults : StgParams {
   Stg_RVI_Params_Defaults()
       : StgParams(::RVI_SignalOpenMethod, ::RVI_SignalOpenFilterMethod, ::RVI_SignalOpenLevel,
                   ::RVI_SignalOpenBoostMethod, ::RVI_SignalCloseMethod, ::RVI_SignalCloseFilter, ::RVI_SignalCloseLevel,
-                  ::RVI_PriceStopMethod, ::RVI_PriceStopLevel, ::RVI_TickFilterMethod, ::RVI_MaxSpread, ::RVI_Shift,
-                  ::RVI_OrderCloseTime) {}
+                  ::RVI_PriceStopMethod, ::RVI_PriceStopLevel, ::RVI_TickFilterMethod, ::RVI_MaxSpread, ::RVI_Shift) {
+    Set(STRAT_PARAM_OCL, RVI_OrderCloseLoss);
+    Set(STRAT_PARAM_OCP, RVI_OrderCloseProfit);
+    Set(STRAT_PARAM_OCT, RVI_OrderCloseTime);
+  }
 } stg_rvi_defaults;
 
 // Struct to define strategy parameters to override.
