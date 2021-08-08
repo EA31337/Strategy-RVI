@@ -11,6 +11,7 @@ INPUT float RVI_SignalOpenLevel = 0.0f;     // Signal open level
 INPUT int RVI_SignalOpenFilterMethod = 32;  // Signal open filter method
 INPUT int RVI_SignalOpenBoostMethod = 0;    // Signal open boost method
 INPUT int RVI_SignalCloseMethod = 2;        // Signal close method (-127-127)
+INPUT int RVI_SignalCloseFilter = 0;        // Signal close filter (-127-127)
 INPUT float RVI_SignalCloseLevel = 0.0f;    // Signal close level
 INPUT int RVI_PriceStopMethod = 1;          // Price stop method
 INPUT float RVI_PriceStopLevel = 0;         // Price stop level
@@ -33,8 +34,9 @@ struct Indi_RVI_Params_Defaults : RVIParams {
 struct Stg_RVI_Params_Defaults : StgParams {
   Stg_RVI_Params_Defaults()
       : StgParams(::RVI_SignalOpenMethod, ::RVI_SignalOpenFilterMethod, ::RVI_SignalOpenLevel,
-                  ::RVI_SignalOpenBoostMethod, ::RVI_SignalCloseMethod, ::RVI_SignalCloseLevel, ::RVI_PriceStopMethod,
-                  ::RVI_PriceStopLevel, ::RVI_TickFilterMethod, ::RVI_MaxSpread, ::RVI_Shift, ::RVI_OrderCloseTime) {}
+                  ::RVI_SignalOpenBoostMethod, ::RVI_SignalCloseMethod, ::RVI_SignalCloseFilter, ::RVI_SignalCloseLevel,
+                  ::RVI_PriceStopMethod, ::RVI_PriceStopLevel, ::RVI_TickFilterMethod, ::RVI_MaxSpread, ::RVI_Shift,
+                  ::RVI_OrderCloseTime) {}
 } stg_rvi_defaults;
 
 // Struct to define strategy parameters to override.
