@@ -9,6 +9,7 @@ INPUT float RVI_LotSize = 0;                // Lot size
 INPUT int RVI_SignalOpenMethod = 2;         // Signal open method (-127-127)
 INPUT float RVI_SignalOpenLevel = 0.0f;     // Signal open level
 INPUT int RVI_SignalOpenFilterMethod = 32;  // Signal open filter method
+INPUT int RVI_SignalOpenFilterTime = 6;     // Signal open filter time
 INPUT int RVI_SignalOpenBoostMethod = 0;    // Signal open boost method
 INPUT int RVI_SignalCloseMethod = 2;        // Signal close method (-127-127)
 INPUT int RVI_SignalCloseFilter = 0;        // Signal close filter (-127-127)
@@ -41,6 +42,7 @@ struct Stg_RVI_Params_Defaults : StgParams {
     Set(STRAT_PARAM_OCL, RVI_OrderCloseLoss);
     Set(STRAT_PARAM_OCP, RVI_OrderCloseProfit);
     Set(STRAT_PARAM_OCT, RVI_OrderCloseTime);
+    Set(STRAT_PARAM_SOFT, RVI_SignalOpenFilterTime);
   }
 } stg_rvi_defaults;
 
