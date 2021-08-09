@@ -17,7 +17,7 @@ struct Stg_RVI_Params_{{ Timeframe }} : StgParams {
   Stg_RVI_Params_{{ Timeframe }}() : StgParams(stg_rvi_defaults) {
     lot_size = {{ RVI_LotSize | default(0) }};
     signal_open_method = {{ RVI_SignalOpenMethod | default(0) }};
-    signal_open_filter = {{ RVI_SignalOpenFilterMethod | default(1) }};
+    signal_open_filter_method = {{ RVI_SignalOpenFilterMethod | default(1) }};
     signal_open_level = (float){{ RVI_SignalOpenLevel | default(0) }};
     signal_open_boost = {{ RVI_SignalOpenBoostMethod | default(0) }};
     signal_close_method = {{ RVI_SignalCloseMethod | default(0) }};
