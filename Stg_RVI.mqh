@@ -6,24 +6,24 @@
 // User input params.
 INPUT_GROUP("RVI strategy: strategy params");
 INPUT float RVI_LotSize = 0;                // Lot size
-INPUT int RVI_SignalOpenMethod = 2;         // Signal open method (-127-127)
-INPUT float RVI_SignalOpenLevel = 0.0f;     // Signal open level
+INPUT int RVI_SignalOpenMethod = 0;         // Signal open method (-127-127)
+INPUT float RVI_SignalOpenLevel = 0.02f;     // Signal open level
 INPUT int RVI_SignalOpenFilterMethod = 32;  // Signal open filter method
-INPUT int RVI_SignalOpenFilterTime = 6;     // Signal open filter time
+INPUT int RVI_SignalOpenFilterTime = 8;     // Signal open filter time
 INPUT int RVI_SignalOpenBoostMethod = 0;    // Signal open boost method
-INPUT int RVI_SignalCloseMethod = 2;        // Signal close method (-127-127)
+INPUT int RVI_SignalCloseMethod = 32;       // Signal close method (-127-127)
 INPUT int RVI_SignalCloseFilter = 0;        // Signal close filter (-127-127)
-INPUT float RVI_SignalCloseLevel = 0.0f;    // Signal close level
-INPUT int RVI_PriceStopMethod = 1;          // Price stop method
+INPUT float RVI_SignalCloseLevel = 0.02f;    // Signal close level
+INPUT int RVI_PriceStopMethod = 1;          // Price stop method (0-127)
 INPUT float RVI_PriceStopLevel = 0;         // Price stop level
 INPUT int RVI_TickFilterMethod = 1;         // Tick filter method
 INPUT float RVI_MaxSpread = 4.0;            // Max spread to trade (pips)
-INPUT short RVI_Shift = 2;                  // Shift
+INPUT short RVI_Shift = 0;                  // Shift
 INPUT float RVI_OrderCloseLoss = 0;         // Order close loss
 INPUT float RVI_OrderCloseProfit = 0;       // Order close profit
-INPUT int RVI_OrderCloseTime = -20;         // Order close time in mins (>0) or bars (<0)
+INPUT int RVI_OrderCloseTime = -30;         // Order close time in mins (>0) or bars (<0)
 INPUT_GROUP("RVI strategy: RVI indicator params");
-INPUT unsigned int RVI_Indi_RVI_Period = 10;  // Averaging period
+INPUT unsigned int RVI_Indi_RVI_Period = 12;  // Averaging period
 INPUT int RVI_Indi_RVI_Shift = 0;             // Shift
 
 // Structs.
@@ -98,7 +98,7 @@ class Stg_RVI : public Strategy {
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, float _level = 0.0f, int _shift = 0) {
     Indi_RVI *_indi = GetIndicator();
-    bool _result = _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID);
+    bool _result = _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _shift) && _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _shift + 1);
     if (!_result) {
       // Returns false when indicator data is not valid.
       return false;
@@ -107,18 +107,20 @@ class Stg_RVI : public Strategy {
     switch (_cmd) {
       case ORDER_TYPE_BUY:
         // Buy: main line (green) crosses signal (red) upwards.
-        _result &= _indi[_shift][0] < _level;
+        _result &= _indi[_shift][(int)LINE_SIGNAL] < _indi[_shift][(int)LINE_MAIN];
+        _result &= _indi[_shift][(int)LINE_MAIN] < _level;
+        _result &= _indi[_shift][(int)LINE_SIGNAL] < _level;
         _result &= _indi.IsIncreasing(2, LINE_SIGNAL, _shift);
-        _result &= _indi[_shift][(int)LINE_SIGNAL] > _indi[_shift][(int)LINE_MAIN];
-        _result &= _indi.IsIncByPct(_level, 0, 0, 2);
+        _result &= _indi.IsIncByPct(_level * 10, LINE_MAIN, 0, 2);
         _result &= _method > 0 ? _signals.CheckSignals(_method) : _signals.CheckSignalsAll(-_method);
         break;
       case ORDER_TYPE_SELL:
         // Sell: main line (green) crosses signal (red) downwards.
-        _result &= _indi[_shift][0] > _level;
+        _result &= _indi[_shift][(int)LINE_SIGNAL] > _indi[_shift][(int)LINE_MAIN];
+        _result &= _indi[_shift][(int)LINE_MAIN] > _level;
+        _result &= _indi[_shift][(int)LINE_SIGNAL] > _level;
         _result &= _indi.IsDecreasing(2, LINE_SIGNAL, _shift);
-        _result &= _indi[_shift][(int)LINE_SIGNAL] < _indi[_shift][(int)LINE_MAIN];
-        _result &= _indi.IsDecByPct(-_level, 0, 0, 2);
+        _result &= _indi.IsDecByPct(-_level * 10, LINE_MAIN, 0, 2);
         _result &= _method > 0 ? _signals.CheckSignals(_method) : _signals.CheckSignalsAll(-_method);
         break;
     }
