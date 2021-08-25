@@ -7,16 +7,16 @@
 INPUT_GROUP("RVI strategy: strategy params");
 INPUT float RVI_LotSize = 0;                // Lot size
 INPUT int RVI_SignalOpenMethod = 0;         // Signal open method (-127-127)
-INPUT float RVI_SignalOpenLevel = 0.02f;     // Signal open level
+INPUT float RVI_SignalOpenLevel = 0.02f;    // Signal open level
 INPUT int RVI_SignalOpenFilterMethod = 32;  // Signal open filter method
 INPUT int RVI_SignalOpenFilterTime = 8;     // Signal open filter time
 INPUT int RVI_SignalOpenBoostMethod = 0;    // Signal open boost method
 INPUT int RVI_SignalCloseMethod = 32;       // Signal close method (-127-127)
 INPUT int RVI_SignalCloseFilter = 0;        // Signal close filter (-127-127)
-INPUT float RVI_SignalCloseLevel = 0.02f;    // Signal close level
+INPUT float RVI_SignalCloseLevel = 0.02f;   // Signal close level
 INPUT int RVI_PriceStopMethod = 1;          // Price stop method (0-127)
 INPUT float RVI_PriceStopLevel = 0;         // Price stop level
-INPUT int RVI_TickFilterMethod = 1;         // Tick filter method
+INPUT int RVI_TickFilterMethod = -48;       // Tick filter method
 INPUT float RVI_MaxSpread = 4.0;            // Max spread to trade (pips)
 INPUT short RVI_Shift = 0;                  // Shift
 INPUT float RVI_OrderCloseLoss = 0;         // Order close loss
@@ -100,7 +100,8 @@ class Stg_RVI : public Strategy {
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method = 0, float _level = 0.0f, int _shift = 0) {
     Indi_RVI *_indi = GetIndicator();
-    bool _result = _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _shift) && _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _shift + 1);
+    bool _result =
+        _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _shift) && _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _shift + 1);
     if (!_result) {
       // Returns false when indicator data is not valid.
       return false;
