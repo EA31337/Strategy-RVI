@@ -39,6 +39,7 @@ struct Stg_RVI_Params_Defaults : StgParams {
       : StgParams(::RVI_SignalOpenMethod, ::RVI_SignalOpenFilterMethod, ::RVI_SignalOpenLevel,
                   ::RVI_SignalOpenBoostMethod, ::RVI_SignalCloseMethod, ::RVI_SignalCloseFilter, ::RVI_SignalCloseLevel,
                   ::RVI_PriceStopMethod, ::RVI_PriceStopLevel, ::RVI_TickFilterMethod, ::RVI_MaxSpread, ::RVI_Shift) {
+    Set(STRAT_PARAM_LS, RVI_LotSize);
     Set(STRAT_PARAM_OCL, RVI_OrderCloseLoss);
     Set(STRAT_PARAM_OCP, RVI_OrderCloseProfit);
     Set(STRAT_PARAM_OCT, RVI_OrderCloseTime);
