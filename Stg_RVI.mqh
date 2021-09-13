@@ -47,19 +47,6 @@ struct Stg_RVI_Params_Defaults : StgParams {
   }
 } stg_rvi_defaults;
 
-// Struct to define strategy parameters to override.
-struct Stg_RVI_Params : StgParams {
-  RVIParams iparams;
-  StgParams sparams;
-
-  // Struct constructors.
-  Stg_RVI_Params(RVIParams &_iparams, StgParams &_sparams)
-      : iparams(indi_rvi_defaults, _iparams.tf.GetTf()), sparams(stg_rvi_defaults) {
-    iparams = _iparams;
-    sparams = _sparams;
-  }
-};
-
 #ifdef __config__
 // Loads pair specific param values.
 #include "config/H1.h"
