@@ -76,7 +76,6 @@ class Stg_RVI : public Strategy {
                              stg_rvi_h8);
 #endif
     // Initialize indicator.
-    RVIParams rvi_params(_indi_params);
     _stg_params.SetIndicator(new Indi_RVI(_indi_params));
     // Initialize Strategy instance.
     ChartParams _cparams(_tf, _Symbol);
