@@ -31,7 +31,7 @@ INPUT int RVI_Indi_RVI_Shift = 0;             // Shift
 // Defines struct with default user indicator values.
 struct Indi_RVI_Params_Defaults : RVIParams {
   Indi_RVI_Params_Defaults() : RVIParams(::RVI_Indi_RVI_Period, ::RVI_Indi_RVI_Shift) {}
-} indi_rvi_defaults;
+};
 
 // Defines struct with default user strategy values.
 struct Stg_RVI_Params_Defaults : StgParams {
@@ -45,7 +45,7 @@ struct Stg_RVI_Params_Defaults : StgParams {
     Set(STRAT_PARAM_OCT, RVI_OrderCloseTime);
     Set(STRAT_PARAM_SOFT, RVI_SignalOpenFilterTime);
   }
-} stg_rvi_defaults;
+};
 
 #ifdef __config__
 // Loads pair specific param values.
@@ -65,7 +65,9 @@ class Stg_RVI : public Strategy {
 
   static Stg_RVI *Init(ENUM_TIMEFRAMES _tf = NULL) {
     // Initialize strategy initial values.
+    Indi_RVI_Params_Defaults indi_rvi_defaults;
     RVIParams _indi_params(indi_rvi_defaults, _tf);
+    Stg_RVI_Params_Defaults stg_rvi_defaults;
     StgParams _stg_params(stg_rvi_defaults);
 #ifdef __config__
     SetParamsByTf<RVIParams>(_indi_params, _tf, indi_rvi_m1, indi_rvi_m5, indi_rvi_m15, indi_rvi_m30, indi_rvi_h1,
