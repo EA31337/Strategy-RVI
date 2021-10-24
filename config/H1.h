@@ -4,8 +4,8 @@
  */
 
 // Defines indicator's parameter values for the given pair symbol and timeframe.
-struct Indi_RVI_Params_H1 : RVIParams {
-  Indi_RVI_Params_H1() : RVIParams(indi_rvi_defaults, PERIOD_H1) {
+struct Indi_RVI_Params_H1 : IndiRVIParams {
+  Indi_RVI_Params_H1() : IndiRVIParams(indi_rvi_defaults, PERIOD_H1) {
     period = 20;
     shift = 0;
   }
