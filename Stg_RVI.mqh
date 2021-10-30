@@ -27,12 +27,6 @@ INPUT unsigned int RVI_Indi_RVI_Period = 12;  // Averaging period
 INPUT int RVI_Indi_RVI_Shift = 0;             // Shift
 
 // Structs.
-
-// Defines struct with default user indicator values.
-struct Indi_RVI_Params_Defaults : IndiRVIParams {
-  Indi_RVI_Params_Defaults() : IndiRVIParams(::RVI_Indi_RVI_Period, ::RVI_Indi_RVI_Shift) {}
-};
-
 // Defines struct with default user strategy values.
 struct Stg_RVI_Params_Defaults : StgParams {
   Stg_RVI_Params_Defaults()
@@ -83,8 +77,8 @@ class Stg_RVI : public Strategy {
    * Event on strategy's init.
    */
   void OnInit() {
-    Indi_RVI_Params_Defaults indi_rvi_defaults;
-    IndiRVIParams _indi_params(indi_rvi_defaults, Get<ENUM_TIMEFRAMES>(STRAT_PARAM_TF));
+    IndiRVIParams _indi_params(::RVI_Indi_RVI_Period, ::RVI_Indi_RVI_Shift);
+    _indi_params.SetTf(Get<ENUM_TIMEFRAMES>(STRAT_PARAM_TF));
     SetIndicator(new Indi_RVI(_indi_params));
   }
 
