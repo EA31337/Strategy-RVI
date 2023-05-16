@@ -23,7 +23,7 @@ INPUT float RVI_OrderCloseLoss = 80;        // Order close loss
 INPUT float RVI_OrderCloseProfit = 80;      // Order close profit
 INPUT int RVI_OrderCloseTime = -30;         // Order close time in mins (>0) or bars (<0)
 INPUT_GROUP("RVI strategy: RVI indicator params");
-INPUT unsigned int RVI_Indi_RVI_Period = 12;  // Averaging period
+INPUT unsigned int RVI_Indi_RVI_Period = 22;  // Averaging period
 INPUT int RVI_Indi_RVI_Shift = 0;             // Shift
 
 // Structs.
