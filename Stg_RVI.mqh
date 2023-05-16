@@ -6,14 +6,14 @@
 // User input params.
 INPUT_GROUP("RVI strategy: strategy params");
 INPUT float RVI_LotSize = 0;                // Lot size
-INPUT int RVI_SignalOpenMethod = 0;         // Signal open method (-127-127)
-INPUT float RVI_SignalOpenLevel = 0.02f;    // Signal open level
+INPUT int RVI_SignalOpenMethod = 16;        // Signal open method (-127-127)
+INPUT float RVI_SignalOpenLevel = 0.05f;    // Signal open level
 INPUT int RVI_SignalOpenFilterMethod = 32;  // Signal open filter method
 INPUT int RVI_SignalOpenFilterTime = 3;     // Signal open filter time
 INPUT int RVI_SignalOpenBoostMethod = 0;    // Signal open boost method
-INPUT int RVI_SignalCloseMethod = 32;       // Signal close method (-127-127)
+INPUT int RVI_SignalCloseMethod = 16;       // Signal close method (-127-127)
 INPUT int RVI_SignalCloseFilter = 0;        // Signal close filter (-127-127)
-INPUT float RVI_SignalCloseLevel = 0.02f;   // Signal close level
+INPUT float RVI_SignalCloseLevel = 0.00f;   // Signal close level
 INPUT int RVI_PriceStopMethod = 1;          // Price stop method (0-127)
 INPUT float RVI_PriceStopLevel = 2;         // Price stop level
 INPUT int RVI_TickFilterMethod = 32;        // Tick filter method
@@ -97,20 +97,18 @@ class Stg_RVI : public Strategy {
     switch (_cmd) {
       case ORDER_TYPE_BUY:
         // Buy: main line (green) crosses signal (red) upwards.
-        _result &= _indi[_shift][(int)LINE_SIGNAL] < _indi[_shift][(int)LINE_MAIN];
-        _result &= _indi[_shift][(int)LINE_MAIN] < _level;
-        _result &= _indi[_shift][(int)LINE_SIGNAL] < _level;
-        _result &= _indi.IsIncreasing(2, LINE_SIGNAL, _shift);
-        _result &= _indi.IsIncByPct(_level * 10, LINE_MAIN, 0, 2);
+        _result &= _indi[_shift][(int)LINE_SIGNAL] > _indi[_shift][(int)LINE_MAIN];
+        _result &= _indi[_shift][(int)LINE_MAIN] < -_level;
+        _result &= _indi[_shift][(int)LINE_SIGNAL] < -_level;
+        _result &= _indi.IsIncByPct(_level * 10, LINE_SIGNAL, _shift, 2);
         _result &= _method > 0 ? _signals.CheckSignals(_method) : _signals.CheckSignalsAll(-_method);
         break;
       case ORDER_TYPE_SELL:
         // Sell: main line (green) crosses signal (red) downwards.
-        _result &= _indi[_shift][(int)LINE_SIGNAL] > _indi[_shift][(int)LINE_MAIN];
+        _result &= _indi[_shift][(int)LINE_SIGNAL] < _indi[_shift][(int)LINE_MAIN];
         _result &= _indi[_shift][(int)LINE_MAIN] > _level;
         _result &= _indi[_shift][(int)LINE_SIGNAL] > _level;
-        _result &= _indi.IsDecreasing(2, LINE_SIGNAL, _shift);
-        _result &= _indi.IsDecByPct(-_level * 10, LINE_MAIN, 0, 2);
+        _result &= _indi.IsDecByPct(-_level * 10, LINE_SIGNAL, _shift, 2);
         _result &= _method > 0 ? _signals.CheckSignals(_method) : _signals.CheckSignalsAll(-_method);
         break;
     }
